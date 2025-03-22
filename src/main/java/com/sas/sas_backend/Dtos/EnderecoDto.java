@@ -13,9 +13,13 @@ public record EnderecoDto(
         @Size(max = 50, message = "A rua deve ter no máximo 50 caracteres.")
         String rua,
 
+        @Size(max = 100, message = "O número deve ter no máximo 100 caracteres.")
+        String complemento,
+
         @NotBlank(message = "Número é obrigatório!")
         @Size(max = 10, message = "O número deve ter no máximo 10 caracteres.")
         String numero,
+
 
         @NotBlank(message = "Bairro é obrigatório!")
         @Size(max = 50, message = "O bairro deve ter no máximo 50 caracteres.")
@@ -34,5 +38,5 @@ public record EnderecoDto(
         @Size(min = 8, max = 9, message = "O CEP deve ter entre 8 e 9 caracteres.")
         @Pattern(regexp = "\\d{5}-?\\d{3}", message = "O CEP deve estar no formato 12345-678 ou 12345678.")
         String cep
-)  {
+) {
 }

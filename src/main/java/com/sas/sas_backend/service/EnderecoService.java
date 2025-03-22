@@ -1,38 +1,38 @@
-package com.sas.sas_backend.Service;
-
+package com.sas.sas_backend.service;
 import com.sas.sas_backend.Dtos.EnderecoDto;
 import com.sas.sas_backend.Models.Endereco;
-import com.sas.sas_backend.Repository.EnderecoRepository;
-import com.sas.sas_backend.Repository.PacienteRepository;
 import com.sas.sas_backend.mappers.EnderecoMapper;
-import com.sas.sas_backend.mappers.PacienteMapper;
+import com.sas.sas_backend.repository.EnderecoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class EnderecoService {
-    private final PacienteRepository pacienteRepository;
-    private final PacienteMapper pacienteMapper;
+
     private final EnderecoMapper enderecoMapper;
     private final EnderecoRepository enderecoRepository;
 
-    public EnderecoDto cadastrarEndereco(EnderecoDto dto){
+    public EnderecoDto cadastrarEndereco(EnderecoDto dto) {
 
         Endereco endereco = enderecoMapper.toEndereco(dto);
         Endereco enderecoSalvo = enderecoRepository.save(endereco);
         return enderecoMapper.toEnderecoDto(enderecoSalvo);
     }
-    public List<EnderecoDto> buscarEnderecos() {
-        List<Endereco> enderecos = enderecoRepository.findAll();
-        return enderecos.stream().map(enderecoMapper::toEnderecoDto).collect(Collectors.toList());
-    }
+
     public EnderecoDto atualizarEndereco(UUID id, EnderecoDto dto) {
+        Endereco enderecoExistente = enderecoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado."));
+        Endereco endereco = enderecoMapper.toEndereco(dto);
+        endereco.setIdEndereco(enderecoExistente.getIdEndereco());
+        return enderecoMapper.toEnderecoDto(enderecoRepository.save(endereco));
+    }
+
+    public void deletarEndereco(UUID id) {
+        enderecoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado."));
+        enderecoRepository.deleteById(id);
 
     }
+
 
 }

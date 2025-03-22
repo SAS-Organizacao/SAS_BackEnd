@@ -1,11 +1,11 @@
-package com.sas.sas_backend.Service;
+package com.sas.sas_backend.service;
 
 import com.sas.sas_backend.Dtos.PacienteDto;
 import com.sas.sas_backend.Exceptions.Paciente.PacienteAlreadyExistsException;
 import com.sas.sas_backend.Exceptions.Paciente.PacienteNotFoundException;
 import com.sas.sas_backend.Models.Paciente;
-import com.sas.sas_backend.Repository.PacienteRepository;
 import com.sas.sas_backend.mappers.PacienteMapper;
+import com.sas.sas_backend.repository.PacienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

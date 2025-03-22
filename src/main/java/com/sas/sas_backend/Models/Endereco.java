@@ -18,10 +18,13 @@ public class Endereco {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id_endereco;
+    private UUID idEndereco;
 
     @Column(nullable = false, length = 50)
     private String rua;
+
+    @Column(length = 100)
+    private String complemento;
 
     @Column(nullable = false, length = 10)
     private String numero;

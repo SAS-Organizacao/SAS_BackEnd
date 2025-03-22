@@ -1,4 +1,4 @@
-package com.sas.sas_backend.Security;
+package com.sas.sas_backend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

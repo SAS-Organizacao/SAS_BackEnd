@@ -1,4 +1,4 @@
-package com.sas.sas_backend.Repository;
+package com.sas.sas_backend.repository;
 
 import com.sas.sas_backend.Models.ProfissionalDeSaude;
 import org.springframework.data.jpa.repository.JpaRepository;

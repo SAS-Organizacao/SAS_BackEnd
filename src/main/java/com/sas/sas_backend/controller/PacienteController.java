@@ -1,7 +1,7 @@
-package com.sas.sas_backend.Controller;
+package com.sas.sas_backend.controller;
 
 import com.sas.sas_backend.Dtos.PacienteDto;
-import com.sas.sas_backend.Service.PacienteService;
+import com.sas.sas_backend.service.PacienteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

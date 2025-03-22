@@ -13,7 +13,7 @@ public enum Genero {
 
     @Override
     @JsonValue
-    public String toString(){
+    public String toString() {
         return description;
     }
 

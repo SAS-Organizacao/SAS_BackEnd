@@ -1,4 +1,4 @@
-package com.sas.sas_backend.Repository;
+package com.sas.sas_backend.repository;
 
 import com.sas.sas_backend.Models.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +10,7 @@ import java.util.UUID;
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente, UUID> {
     Optional<Paciente> findByCpf(String cpf);
+
     Optional<Paciente> findByEmail(String email);
 
 

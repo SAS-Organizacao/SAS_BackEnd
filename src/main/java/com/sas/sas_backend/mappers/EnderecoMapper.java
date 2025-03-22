@@ -8,5 +8,6 @@ import org.mapstruct.Mapper;
 public interface EnderecoMapper {
 
     Endereco toEndereco(EnderecoDto enderecoDto);
+
     EnderecoDto toEnderecoDto(Endereco endereco);
 }
