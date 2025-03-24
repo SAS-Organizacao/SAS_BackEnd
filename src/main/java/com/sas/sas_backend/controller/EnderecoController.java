@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/Endereco")
 @RequiredArgsConstructor
@@ -24,13 +22,13 @@ public class EnderecoController {
     }
 
     @PutMapping("/update/Endereco/{id}")
-    public ResponseEntity<EnderecoDto> atualizarEndereco(@PathVariable UUID id, @Valid @RequestBody EnderecoDto enderecoDto) {
+    public ResponseEntity<EnderecoDto> atualizarEndereco(@PathVariable String id, @Valid @RequestBody EnderecoDto enderecoDto) {
         return ResponseEntity.status(HttpStatus.OK).body(enderecoService.atualizarEndereco(id, enderecoDto));
 
     }
 
     @DeleteMapping("/delete/Endereco/{id}")
-    public ResponseEntity<Void> deletarEndereco(@PathVariable UUID id) {
+    public ResponseEntity<Void> deletarEndereco(@PathVariable String id) {
         enderecoService.deletarEndereco(id);
         return ResponseEntity.noContent().build();
     }

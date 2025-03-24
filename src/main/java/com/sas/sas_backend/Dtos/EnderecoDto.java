@@ -4,11 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-import java.util.UUID;
-
 public record EnderecoDto(
 
-        UUID idEndereco,
+
         @NotBlank(message = "Rua é obrigatória!")
         @Size(max = 50, message = "A rua deve ter no máximo 50 caracteres.")
         String rua,
@@ -38,5 +36,5 @@ public record EnderecoDto(
         @Size(min = 8, max = 9, message = "O CEP deve ter entre 8 e 9 caracteres.")
         @Pattern(regexp = "\\d{5}-?\\d{3}", message = "O CEP deve estar no formato 12345-678 ou 12345678.")
         String cep
-) {
+        ) {
 }

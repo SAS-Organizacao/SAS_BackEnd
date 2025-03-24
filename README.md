@@ -4,14 +4,15 @@
 
 <b>Praticidade para Pacientes:</b> Agendamento rápido, acesso a prontuários digitais e informações centralizadas.
 
-<b>Eficiência para Profissionais:</b> Gestão simplificada de consultas, integração de históricos médicos e otimização de processos.
+<b>Eficiência para Profissionais:</b> Gestão simplificada de consultas, integração de históricos médicos e otimização de
+processos.
 
 <b>Inovação Contínua:</b> Soluções personalizadas e atualizadas para atender às necessidades do setor de saúde.
 
- Na SAS, acreditamos que a tecnologia pode ser uma grande aliada para melhorar a saúde e o bem-estar da sociedade.
-
+Na SAS, acreditamos que a tecnologia pode ser uma grande aliada para melhorar a saúde e o bem-estar da sociedade.
 
 # 🚀 Tecnologias Utilizadas
+
 - Frontend: HTML,CSS, Javascript e React.js
 - Backend: Java (Spring Boot)
 - Banco de Dados: MySQL
@@ -158,8 +159,10 @@ erDiagram
 ```
 
 # 📦 Instalação e Configuração
+
 🔧 Pré-requisitos
 Antes de começar, certifique-se de ter as seguintes ferramentas instaladas:
+
 - Node.js
 - Java JDK 21
 - MySQL
@@ -167,23 +170,28 @@ Antes de começar, certifique-se de ter as seguintes ferramentas instaladas:
 - React.js
 
 # 🎯 Passos para rodar o projeto🔹Backend (Java)
+
 # 🔗 Clone o repositório
+
 ```git
 git clone https://github.com/SAS-Organizacao/SAS_BackEnd
 ```
 
 # 🛠️ Endpoints da API
+
 <p>Em construção...</p>
 
 # 📌 Autenticação
+
 <p>Em construção...</p>
 
 # 📌 Agendamentos
+
 <p>Em construção...</p>
 
 # 📌 Prontuário
-<p>Em construção...</p>
 
+<p>Em construção...</p>
 
 # 📌 Contato
 
@@ -192,6 +200,7 @@ git clone https://github.com/SAS-Organizacao/SAS_BackEnd
 🌐Site: www.sas.com.br
 
 # Integrantes
+
 </tr>
   <tr align=center>
     <td>

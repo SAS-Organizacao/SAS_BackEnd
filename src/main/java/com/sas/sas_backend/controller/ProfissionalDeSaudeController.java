@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/profissional-de-saude")
@@ -33,12 +32,12 @@ public class ProfissionalDeSaudeController {
     }
 
     @PutMapping("/update/profissionaldesaude/{id}")
-    public ResponseEntity<ProfissionalDeSaudeDto> atualizarProfissionalDeSaude(@PathVariable UUID id, @Valid @RequestBody ProfissionalDeSaudeDto dto) {
+    public ResponseEntity<ProfissionalDeSaudeDto> atualizarProfissionalDeSaude(@PathVariable String id, @Valid @RequestBody ProfissionalDeSaudeDto dto) {
         return ResponseEntity.status(HttpStatus.OK).body(service.atualizarProfissionalDeSaude(id, dto));
     }
 
     @DeleteMapping("/delete/profissionaldesaude/{id}")
-    public ResponseEntity<Void> deletarProfissionalDeSaude(@PathVariable UUID id) {
+    public ResponseEntity<Void> deletarProfissionalDeSaude(@PathVariable String id) {
         service.deletarProfissionalDeSaude(id);
         return ResponseEntity.noContent().build();
     }

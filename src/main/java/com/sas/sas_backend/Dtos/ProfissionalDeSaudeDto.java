@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import java.util.UUID;
 
 public record ProfissionalDeSaudeDto(
+
         UUID idProfissionalDeSaude,
 
         @NotBlank(message = "Nome é obrigatório!")

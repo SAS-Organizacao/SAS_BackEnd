@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "profissional_de_saude")
 @Getter
@@ -17,12 +15,18 @@ import java.util.UUID;
 public class ProfissionalDeSaude {
 
     @Id
+    @Column(name = "id_profissional_de_saude", length = 36)
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idProfissionalDeSaude;
+    private String idProfissionalDeSaude;
+
+    @Column(name = "unidade_de_saude_id", length = 36)
+    private String idUnidadeSaude;
 
     @Column(nullable = false, length = 50)
     private String nome;
 
     @Column(length = 15)
     private String telefone;
+
+
 }

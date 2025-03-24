@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/paciente")
@@ -37,13 +36,13 @@ public class PacienteController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<PacienteDto> atualizarPaciente(@PathVariable UUID id, @Valid @RequestBody PacienteDto pacienteDto) {
+    public ResponseEntity<PacienteDto> atualizarPaciente(@PathVariable String id, @Valid @RequestBody PacienteDto pacienteDto) {
         return ResponseEntity.status(HttpStatus.OK).body(pacienteService.atualizarPaciente(id, pacienteDto));
 
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deletarPaciente(@PathVariable UUID id) {
+    public ResponseEntity<Void> deletarPaciente(@PathVariable String id) {
         pacienteService.deletarPaciente(id);
         return ResponseEntity.noContent().build();
     }

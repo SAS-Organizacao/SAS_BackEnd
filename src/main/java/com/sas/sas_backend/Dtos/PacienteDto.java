@@ -5,11 +5,9 @@ import com.sas.sas_backend.Models.Genero;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public record PacienteDto(
 
-        UUID idPaciente,
 
         @NotBlank(message = "CPF é obrigatório!")
         @Pattern(regexp = "\\d{11}", message = "O CPF deve conter exatamente 11 dígitos")
@@ -44,7 +42,9 @@ public record PacienteDto(
         String grauInstrucao,
 
         @NotNull
-        Boolean notificacoesAtivadas
+        Boolean notificacoesAtivadas,
+
+        EnderecoDto endereco
 
 
 ) {

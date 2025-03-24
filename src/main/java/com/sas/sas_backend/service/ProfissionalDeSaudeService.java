@@ -10,13 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProfissionalDeSaudeService {
-
 
     private final ProfissionalDeSaudeRepository profisisonalDeSaudeRepository;
     private final ProfissionalDeSaudeMapper profissionalDeSaudeMapper;
@@ -41,10 +38,10 @@ public class ProfissionalDeSaudeService {
         if (profissionais.isEmpty()) {
             throw new ProfissionalDeSaudeNotFoundException("Nenhum profissional encontrado.");
         }
-        return profissionais.stream().map(profissionalDeSaudeMapper::toProfissionalDeSaudeDto).collect(Collectors.toList());
+        return profissionais.stream().map(profissionalDeSaudeMapper::toProfissionalDeSaudeDto).toList();
     }
 
-    public ProfissionalDeSaudeDto atualizarProfissionalDeSaude(UUID id, ProfissionalDeSaudeDto dto) {
+    public ProfissionalDeSaudeDto atualizarProfissionalDeSaude(String id, ProfissionalDeSaudeDto dto) {
         ProfissionalDeSaude profissionalExistente = profisisonalDeSaudeRepository.findById(id)
                 .orElseThrow(() -> new ProfissionalDeSaudeNotFoundException("Profissional não encontrado com o ID: " + id));
         ProfissionalDeSaude profissional = profissionalDeSaudeMapper.toProfissionalDeSaude(dto);
@@ -52,7 +49,7 @@ public class ProfissionalDeSaudeService {
         return profissionalDeSaudeMapper.toProfissionalDeSaudeDto(profisisonalDeSaudeRepository.save(profissional));
     }
 
-    public void deletarProfissionalDeSaude(UUID id) {
+    public void deletarProfissionalDeSaude(String id) {
         profisisonalDeSaudeRepository.findById(id).orElseThrow(() -> new ProfissionalDeSaudeNotFoundException("Profissional não encontrado com o ID: " + id));
         profisisonalDeSaudeRepository.deleteById(id);
     }

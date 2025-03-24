@@ -1,23 +1,23 @@
 package com.sas.sas_backend.Models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Table(name = "paciente")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class Paciente {
 
     @Id
+    @Column(name = "id_paciente", length = 36)
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idPaciente;
+    private String idPaciente;
 
     @Column(nullable = false, unique = true, length = 11)
     private String cpf;
@@ -25,7 +25,6 @@ public class Paciente {
     @Column(nullable = false, length = 50)
     private String nome;
 
-    @Email
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
@@ -39,7 +38,6 @@ public class Paciente {
     @Column(name = "genero", nullable = false)
     private Genero genero;
 
-
     @Column(length = 15)
     private String telefone;
 
@@ -49,15 +47,9 @@ public class Paciente {
     @Column(nullable = false)
     private Boolean notificacoesAtivadas;
 
-    public Paciente(String cpf, String nome, String email, String senha, LocalDate dataNascimento, Genero genero, String telefone, String grauInstrucao, Boolean notificacoesAtivadas) {
-        this.cpf = cpf;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.dataNascimento = dataNascimento;
-        this.genero = genero;
-        this.telefone = telefone;
-        this.grauInstrucao = grauInstrucao;
-        this.notificacoesAtivadas = notificacoesAtivadas;
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    //                  coluna da entidade                    coluna da entidade de destino
+    @JoinColumn(name = "endereco_id", referencedColumnName = "id_endereco")
+    private Endereco endereco;
+
 }
