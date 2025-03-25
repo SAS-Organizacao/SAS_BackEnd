@@ -23,139 +23,202 @@ Na SAS, acreditamos que a tecnologia pode ser uma grande aliada para melhorar a 
 
 ```mermaid
 erDiagram
+    endereco ||--o{ paciente : "1:1"
+    endereco ||--o{ unidade_de_saude : "1:1"
+    unidade_de_saude ||--o{ profissional_de_saude : "1:N"
+    unidade_de_saude ||--o{ disponibilidade : "1:N"
+    profissional_de_saude ||--o{ disponibilidade : "1:N"
+    profissional_de_saude ||--o{ credenciais_profissional : "1:1"
+    profissional_de_saude ||--o{ agendamento : "1:N"
+    profissional_de_saude ||--o{ prontuario : "1:N"
+    profissional_de_saude ||--o{ exame : "1:N"
+    profissional_de_saude ||--o{ log_acesso : "1:N"
+    paciente ||--o{ agendamento : "1:N"
+    paciente ||--o{ prontuario : "1:1"
+    paciente ||--o{ exame : "1:N"
+    paciente ||--o{ notificacao : "1:N"
+    paciente ||--o{ log_acesso : "1:N"
+    paciente ||--o{ medicamento : "1:N"
+    agendamento ||--o{ exame : "1:1"
+    agendamento ||--o{ disponibilidade : "0..1:1"
+    exame ||--o{ resultado_exame : "1:1"
+    exame ||--o{ medicamento : "0..1:1"
+    historico_alteracoes }|--|| paciente : "0..1:1"
+    historico_alteracoes }|--|| unidade_de_saude : "0..1:1"
+    historico_alteracoes }|--|| profissional_de_saude : "0..1:1"
+    historico_alteracoes }|--|| agendamento : "0..1:1"
+    historico_alteracoes }|--|| exame : "0..1:1"
+
+    endereco {
+        string id_endereco PK
+        string rua
+        string complemento
+        string numero
+        string bairro
+        string cidade
+        string uf
+        string cep
+        string pais
+        timestamp criado_em
+        timestamp atualizado_em
+    }
+
     paciente {
-        BINARY id_paciente
-        STRING nome
-        STRING cpf
-        STRING email
-        STRING senha
-        DATE data_nascimento
-        ENUM genero
-        STRING telefone
-        STRING grau_instrucao
-        BOOLEAN notificacoes_ativadas
+        string id_paciente PK
+        string nome
+        string cpf
+        string email
+        string senha
+        date data_nascimento
+        string genero "M|F|Outro"
+        string telefone
+        string grau_instrucao
+        boolean notificacoes_ativadas
+        timestamp criado_em
+        timestamp atualizado_em
+        string endereco_id FK
     }
 
     unidade_de_saude {
-        BINARY id_unidade_de_saude
-        STRING nome
-        STRING profissao
-        ENUM tipo
-        STRING cnpj
-        STRING registro_sanitario
-        TEXT descricao
+        string id_unidade_de_saude PK
+        string nome
+        string tipo "UBS|hospital|clinica|laboratorio|posto de saúde"
+        string cnpj
+        text descricao
+        string email_unidade
+        string senha_unidade
+        timestamp criado_em
+        timestamp atualizado_em
+        string endereco_id_endereco FK
     }
 
     profissional_de_saude {
-        BINARY id_profissional_de_saude
-        STRING nome
-        STRING cpf
-        STRING email
-        STRING telefone
-        STRING codigo_acesso
-        STRING senha_hash
-        BINARY unidade_de_saude_id
-    }
-
-    agendamento {
-        BINARY id_agendamento
-        DATETIME data_hora
-        BINARY paciente_id
-        BINARY profissional_id
-        BINARY unidade_de_saude_id
-        ENUM status
-    }
-
-    exame {
-        BINARY id_exame
-        TEXT descricao
-        ENUM status
-        BINARY paciente_id
-        BINARY profissional_id
-        BINARY agendamento_id
-    }
-
-    resultado_exame {
-        BINARY id_resultado
-        BINARY exame_id
-        BLOB resultado
-        TIMESTAMP data_resultado
-    }
-
-    prontuario {
-        BINARY id_prontuario
-        BINARY paciente_id
-        BINARY profissional_id
-        TEXT descricao
-        TEXT alergia
-        ENUM tipo_sanguineo
-        TEXT doenca_cronica
-        TIMESTAMP ultima_atualizacao
-    }
-
-    medicamento {
-        INT id_medicamento
-        STRING nome
-        BINARY paciente_id
-        BINARY profissional_id
-        BINARY agendamento_id
-    }
-
-    notificacao {
-        BINARY id_notificacao
-        BINARY paciente_id
-        ENUM tipo
-        DATETIME data_envio
-        ENUM status
-    }
-
-    endereco {
-        BINARY id_endereco
-        STRING rua
-        STRING numero
-        STRING bairro
-        STRING cidade
-        STRING uf
-        STRING cep
-        BINARY paciente_id
-        BINARY unidade_de_saude_id
-    }
-
-    log_acesso {
-        BINARY id_log
-        BINARY profissional_id
-        BINARY paciente_id
-        TIMESTAMP data_hora
-        ENUM acao
+        string id_profissional_de_saude PK
+        string nome
+        string telefone
+        string especialidade
+        string unidade_de_saude_id FK
+        timestamp criado_em
+        timestamp atualizado_em
     }
 
     disponibilidade {
-        BINARY id_disponibilidade
-        BINARY profissional_id
-        BINARY unidade_de_saude_id
-        ENUM dia_semana
-        TIME horario_inicio
-        TIME horario_fim
+        string id_disponibilidade PK
+        string profissional_id FK
+        string unidade_de_saude_id FK
+        string dia_semana "Segunda|Terça|Quarta|Quinta|Sexta|Sábado|Domingo"
+        time horario_inicio
+        time horario_fim
+        date data
+        timestamp criado_em
+        timestamp atualizado_em
     }
 
-    paciente ||--o{ agendamento : "faz"
-    paciente ||--o{ exame : "realiza"
-    paciente ||--o{ prontuario : "possui"
-    paciente ||--o{ notificacao : "recebe"
-    paciente ||--o{ endereco : "possui"
-    paciente ||--o{ medicamento : "usa"
-    profissional_de_saude ||--o{ agendamento : "atende"
-    profissional_de_saude ||--o{ exame : "realiza"
-    profissional_de_saude ||--o{ prontuario : "atualiza"
-    profissional_de_saude ||--o{ log_acesso : "registra"
-    profissional_de_saude ||--o{ disponibilidade : "tem"
-    unidade_de_saude ||--o{ profissional_de_saude : "contrata"
-    unidade_de_saude ||--o{ agendamento : "recebe"
-    unidade_de_saude ||--o{ endereco : "possui"
-    exame ||--o{ resultado_exame : "gera"
-    agendamento ||--o{ exame : "agenda"
-    agendamento ||--o{ medicamento : "prescreve"
+    agendamento {
+        string id_agendamento PK
+        datetime data_hora
+        string paciente_id FK
+        string profissional_id FK
+        string unidade_de_saude_id FK
+        string disponibilidade_id FK
+        string status "Confirmado|Cancelado|Concluído"
+        text observacoes
+        timestamp criado_em
+        timestamp atualizado_em
+    }
 
+    credenciais_profissional {
+        string id_credencial PK
+        string profissional_id FK
+        string unidade_de_saude_id FK
+        string email
+        string senha
+        string tipo_profissional "Médico|Enfermeiro|Dentista|Psicólogo|Fisioterapeuta|Nutricionista|Técnico de Enfermagem"
+        string numero_registro
+        timestamp criado_em
+        timestamp atualizado_em
+    }
+
+    exame {
+        string id_exame PK
+        text descricao
+        string tipo_exame
+        string status "Pendente|Realizado|Cancelado"
+        string paciente_id FK
+        string profissional_id FK
+        string agendamento_id FK
+        timestamp criado_em
+        timestamp atualizado_em
+    }
+
+    historico_alteracoes {
+        string id_log PK
+        string tabela_afetada
+        string id_registro
+        string acao "INSERT|UPDATE|DELETE"
+        timestamp data_hora
+        string usuario
+        text detalhes
+        string paciente_id FK
+        string unidade_de_saude_id FK
+        string profissional_id FK
+        string agendamento_id FK
+        string exame_id FK
+    }
+
+    log_acesso {
+        string id_log PK
+        string profissional_id FK
+        string paciente_id FK
+        timestamp data_hora
+        string acao "Consulta Prontuário|Prescrição|Solicitação Exame"
+        text justificativa
+    }
+
+    medicamento {
+        string id_medicamento PK
+        string nome
+        string dosagem
+        string frequencia
+        string paciente_id FK
+        string profissional_id FK
+        string agendamento_id FK
+        string exame_id FK
+        binary receita
+        timestamp criado_em
+        timestamp atualizado_em
+    }
+
+    notificacao {
+        string id_notificacao PK
+        string paciente_id FK
+        string tipo "Consulta|Exame|Prontuário"
+        text mensagem
+        datetime data_envio
+        string status "Enviado|Lido|Cancelado"
+        timestamp criado_em
+        timestamp atualizado_em
+    }
+
+    prontuario {
+        string id_prontuario PK
+        string paciente_id FK
+        string profissional_id FK
+        text descricao
+        text alergia
+        string tipo_sanguineo "A+|A-|B+|B-|AB+|AB-|O+|O-"
+        text doenca_cronica
+        text historico_familiar
+        timestamp ultima_atualizacao
+    }
+
+    resultado_exame {
+        string id_resultado PK
+        string exame_id FK
+        binary resultado
+        text interpretacao
+        timestamp data_resultado
+    }
 ```
 
 # 📦 Instalação e Configuração
