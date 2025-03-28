@@ -1,10 +1,11 @@
-package com.sas.sas_backend.Dtos;
+package com.sas.sas_backend.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sas.sas_backend.Models.Genero;
+import com.sas.sas_backend.models.enumerated.Genero;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record PacienteDto(
 
@@ -44,7 +45,9 @@ public record PacienteDto(
         @NotNull
         Boolean notificacoesAtivadas,
 
-        EnderecoDto endereco
+        EnderecoDto endereco,
+
+        List<ExameDto> exame
 
 
 ) {

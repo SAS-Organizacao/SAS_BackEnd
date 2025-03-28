@@ -1,6 +1,6 @@
-package com.sas.sas_backend.Exceptions.CredenciaisProfissional;
+package com.sas.sas_backend.exceptions.credenciaisProfissional;
 
-import com.sas.sas_backend.Exceptions.BaseException;
+import com.sas.sas_backend.exceptions.BaseException;
 
 public class CredenciaisProfissionalNotFoundException extends BaseException {
     public CredenciaisProfissionalNotFoundException(String detail) {

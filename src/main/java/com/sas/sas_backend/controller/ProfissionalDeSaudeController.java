@@ -1,6 +1,6 @@
 package com.sas.sas_backend.controller;
 
-import com.sas.sas_backend.Dtos.ProfissionalDeSaudeDto;
+import com.sas.sas_backend.dtos.ProfissionalDeSaudeDto;
 import com.sas.sas_backend.service.ProfissionalDeSaudeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

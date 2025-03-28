@@ -1,7 +1,7 @@
 package com.sas.sas_backend.service;
 
-import com.sas.sas_backend.Dtos.EnderecoDto;
-import com.sas.sas_backend.Models.Endereco;
+import com.sas.sas_backend.dtos.EnderecoDto;
+import com.sas.sas_backend.models.Endereco;
 import com.sas.sas_backend.mappers.EnderecoMapper;
 import com.sas.sas_backend.repository.EnderecoRepository;
 import lombok.RequiredArgsConstructor;

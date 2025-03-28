@@ -1,4 +1,4 @@
-package com.sas.sas_backend.Exceptions;
+package com.sas.sas_backend.exceptions;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

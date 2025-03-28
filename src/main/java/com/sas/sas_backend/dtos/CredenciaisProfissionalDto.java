@@ -1,12 +1,10 @@
-package com.sas.sas_backend.Dtos;
+package com.sas.sas_backend.dtos;
 
-import com.sas.sas_backend.Models.TipoProfissional;
+import com.sas.sas_backend.models.enumerated.TipoProfissional;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-
-import java.util.UUID;
 
 public record CredenciaisProfissionalDto(
 
@@ -25,9 +23,9 @@ public record CredenciaisProfissionalDto(
         @NotBlank(message = "Numero de Registro é obrigatório!")
         String numeroRegistro,
 
-        String idProfissional,
+        String Profissional
 
-        String idUnidadeSaude
+//        String UnidadeSaude
 ) {
 }
 

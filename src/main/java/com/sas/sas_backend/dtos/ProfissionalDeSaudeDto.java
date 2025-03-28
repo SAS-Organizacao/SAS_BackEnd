@@ -1,8 +1,9 @@
-package com.sas.sas_backend.Dtos;
+package com.sas.sas_backend.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.List;
 import java.util.UUID;
 
 public record ProfissionalDeSaudeDto(
@@ -15,6 +16,9 @@ public record ProfissionalDeSaudeDto(
 
         @NotBlank
         @Pattern(regexp = "\\d{10,11}")
-        String telefone
+        String telefone,
+
+        List<ExameDto> exame
+
 ) {
 }

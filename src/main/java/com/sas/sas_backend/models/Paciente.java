@@ -1,5 +1,7 @@
-package com.sas.sas_backend.Models;
+package com.sas.sas_backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sas.sas_backend.models.enumerated.Genero;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "paciente")
@@ -51,5 +55,8 @@ public class Paciente {
     //                  coluna da entidade                    coluna da entidade de destino
     @JoinColumn(name = "endereco_id", referencedColumnName = "id_endereco")
     private Endereco endereco;
+
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Exame> exame = new ArrayList<>();
 
 }

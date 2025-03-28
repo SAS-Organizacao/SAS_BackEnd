@@ -1,6 +1,6 @@
-package com.sas.sas_backend.Exceptions.CredenciaisProfissional;
+package com.sas.sas_backend.exceptions.credenciaisProfissional;
 
-import com.sas.sas_backend.Exceptions.BaseException;
+import com.sas.sas_backend.exceptions.BaseException;
 
 public class CredenciaisProfissionalAlreadyExistsException extends BaseException {
     public CredenciaisProfissionalAlreadyExistsException(String detail) {

@@ -1,10 +1,13 @@
-package com.sas.sas_backend.Models;
+package com.sas.sas_backend.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "profissional_de_saude")
@@ -27,6 +30,10 @@ public class ProfissionalDeSaude {
 
     @Column(length = 15)
     private String telefone;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Exame> exame = new ArrayList<>();
+
 
 
 }

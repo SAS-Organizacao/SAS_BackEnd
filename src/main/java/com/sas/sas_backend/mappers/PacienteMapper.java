@@ -1,7 +1,7 @@
 package com.sas.sas_backend.mappers;
 
-import com.sas.sas_backend.Dtos.PacienteDto;
-import com.sas.sas_backend.Models.Paciente;
+import com.sas.sas_backend.dtos.PacienteDto;
+import com.sas.sas_backend.models.Paciente;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -10,7 +10,9 @@ import org.mapstruct.Mapping;
 public interface PacienteMapper {
 
     @Mapping(source = "endereco", target = "endereco")
+    @Mapping(source = "exame", target = "exame")
     Paciente toPaciente(PacienteDto pacienteDto);
+
 
     PacienteDto toPacienteDto(Paciente paciente);
 }

@@ -1,9 +1,9 @@
 package com.sas.sas_backend.service;
 
-import com.sas.sas_backend.Dtos.ProfissionalDeSaudeDto;
-import com.sas.sas_backend.Exceptions.ProfissionalDeSaude.ProfissionalDeSaudeAlreadyExistsException;
-import com.sas.sas_backend.Exceptions.ProfissionalDeSaude.ProfissionalDeSaudeNotFoundException;
-import com.sas.sas_backend.Models.ProfissionalDeSaude;
+import com.sas.sas_backend.dtos.ProfissionalDeSaudeDto;
+import com.sas.sas_backend.exceptions.profissionalDeSaude.ProfissionalDeSaudeAlreadyExistsException;
+import com.sas.sas_backend.exceptions.profissionalDeSaude.ProfissionalDeSaudeNotFoundException;
+import com.sas.sas_backend.models.ProfissionalDeSaude;
 import com.sas.sas_backend.mappers.ProfissionalDeSaudeMapper;
 import com.sas.sas_backend.repository.ProfissionalDeSaudeRepository;
 import lombok.RequiredArgsConstructor;

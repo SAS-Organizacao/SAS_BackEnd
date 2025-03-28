@@ -1,5 +1,6 @@
-package com.sas.sas_backend.Models;
+package com.sas.sas_backend.models;
 
+import com.sas.sas_backend.models.enumerated.TipoProfissional;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

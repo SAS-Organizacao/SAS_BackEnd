@@ -1,6 +1,6 @@
-package com.sas.sas_backend.Exceptions.Paciente;
+package com.sas.sas_backend.exceptions.paciente;
 
-import com.sas.sas_backend.Exceptions.BaseException;
+import com.sas.sas_backend.exceptions.BaseException;
 
 public class PacienteNotFoundException extends BaseException {
 

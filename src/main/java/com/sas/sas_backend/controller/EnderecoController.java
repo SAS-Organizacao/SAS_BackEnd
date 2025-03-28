@@ -1,6 +1,6 @@
 package com.sas.sas_backend.controller;
 
-import com.sas.sas_backend.Dtos.EnderecoDto;
+import com.sas.sas_backend.dtos.EnderecoDto;
 import com.sas.sas_backend.service.EnderecoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

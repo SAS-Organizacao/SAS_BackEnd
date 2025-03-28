@@ -1,6 +1,7 @@
 package com.sas.sas_backend.controller;
 
-import com.sas.sas_backend.Dtos.PacienteDto;
+import com.sas.sas_backend.dtos.ExameDto;
+import com.sas.sas_backend.dtos.PacienteDto;
 import com.sas.sas_backend.service.PacienteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,10 @@ public class PacienteController {
 
         return ResponseEntity.ok().body(pacienteService.buscarPorCpf(cpf));
 
+    }
+    @PostMapping("add/exame/to/paciente/{id}")
+    public ResponseEntity<PacienteDto> adicionarExame(@PathVariable String id, @RequestBody @Valid ExameDto dto) {
+        return ResponseEntity.ok().body(pacienteService.adicionarExame(id, dto));
     }
 
     @PutMapping("/update/{id}")

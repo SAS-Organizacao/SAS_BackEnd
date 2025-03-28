@@ -1,6 +1,6 @@
-package com.sas.sas_backend.Exceptions.ProfissionalDeSaude;
+package com.sas.sas_backend.exceptions.profissionalDeSaude;
 
-import com.sas.sas_backend.Exceptions.BaseException;
+import com.sas.sas_backend.exceptions.BaseException;
 
 public class ProfissionalDeSaudeNotFoundException extends BaseException {
     public ProfissionalDeSaudeNotFoundException(String detail) {

@@ -1,9 +1,9 @@
 package com.sas.sas_backend.service;
 
-import com.sas.sas_backend.Dtos.CredenciaisProfissionalDto;
-import com.sas.sas_backend.Exceptions.CredenciaisProfissional.CredenciaisProfissionalAlreadyExistsException;
-import com.sas.sas_backend.Exceptions.CredenciaisProfissional.CredenciaisProfissionalNotFoundException;
-import com.sas.sas_backend.Models.CredenciaisProfissional;
+import com.sas.sas_backend.dtos.CredenciaisProfissionalDto;
+import com.sas.sas_backend.exceptions.credenciaisProfissional.CredenciaisProfissionalAlreadyExistsException;
+import com.sas.sas_backend.exceptions.credenciaisProfissional.CredenciaisProfissionalNotFoundException;
+import com.sas.sas_backend.models.CredenciaisProfissional;
 import com.sas.sas_backend.mappers.CredenciaisProfissionalMapper;
 import com.sas.sas_backend.repository.CredenciaisProfissionalRepository;
 import lombok.RequiredArgsConstructor;

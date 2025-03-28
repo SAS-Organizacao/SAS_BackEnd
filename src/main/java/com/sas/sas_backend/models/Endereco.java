@@ -1,4 +1,4 @@
-package com.sas.sas_backend.Models;
+package com.sas.sas_backend.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
