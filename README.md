@@ -19,6 +19,46 @@ Na SAS, acreditamos que a tecnologia pode ser uma grande aliada para melhorar a 
 - Notificações: SMS/WhatsApp
 - Docker
 
+# Requisitos Funcionais
+**Paciente**
+- RF1 - O sistema deve permitir o cadastro de pacientes.
+- RF2 - O sistema deve permitir o login de pacientes.
+- RF3 - O sistema deve permitir a redefinição de senha.
+- RF4 - O sistema deve permitir o agendamento de consultas, escolhendo especialidade, horário e localidade.
+- RF5 - O sistema deve permitir o agendamento de exames, escolhendo horário e localidade.
+- RF6 - O sistema deve permitir a visualização de resultados de consultas, exames e laudos médicos.
+- RF7 - O sistema deve permitir o acesso ao próprio prontuário.
+- RF8 - O sistema deve permitir a consulta de CPF de pacientes cadastrados, exibindo informações relevantes.
+- RF9 - O sistema deve permitir a atualização de dados pessoais.
+
+**Profissional de Saúde**
+- RF10 - O sistema deve permitir o login de profissionais de saúde.
+- RF11 - O sistema deve permitir a redefinição de senha.
+- RF12 - O sistema deve permitir a atualização de dados pessoais.
+- RF13 - O sistema deve permitir o acesso ao prontuário dos pacientes.
+- RF14 - O sistema deve permitir a consulta de CPF de pacientes cadastrados.
+
+**Funcionalidades Restritas a Médicos**
+- RF15 - O sistema deve permitir a prescrição de medicamentos.
+- RF16 - O sistema deve permitir a adição de documentos, como atestados.
+- RF17 - O sistema deve permitir o registro de anamnese do paciente.
+- RF18 - O sistema deve permitir a solicitação de exames.
+
+**Unidades de Saúde**
+- RF19 - O sistema deve permitir o cadastro de Unidades Básicas de Saúde, clínicas e hospitais.
+- RF20 - O sistema deve permitir a gestão do cadastro de profissionais de saúde.
+- RF21 - O sistema deve permitir o login da unidade de saúde.
+- RF22 - O sistema deve permitir a redefinição de senha da unidade de saúde.
+- RF23 - O sistema deve permitir a atualização dos dados institucionais da unidade de saúde.
+
+# Requisitos Não Funcionais
+- RNF01 - O sistema deve responder rapidamente em operações de agendamento, exames e outras interações.
+- RNF02 - O sistema deve garantir proteção de dados conforme a LGPD.
+- RNF03 - O sistema deve possuir uma interface intuitiva e acessível.
+- RNF04 - O sistema deve permitir autenticação segura e redefinição de senha.
+- RNF05 - O sistema deve oferecer suporte a integrações com APIs de terceiros.
+
+
 # 📑 Modelo Entidade de Relacionamento (EER)
 
 ```mermaid

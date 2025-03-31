@@ -59,4 +59,7 @@ public class Paciente {
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Exame> exame = new ArrayList<>();
 
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
+    private List<Notificacao> notificacoes = new ArrayList<>();
+
 }
