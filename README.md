@@ -23,138 +23,132 @@ Na SAS, acreditamos que a tecnologia pode ser uma grande aliada para melhorar a 
 
 ```mermaid
 erDiagram
-    paciente {
-        BINARY id_paciente
-        STRING nome
-        STRING cpf
-        STRING email
-        STRING senha
-        DATE data_nascimento
-        ENUM genero
-        STRING telefone
-        STRING grau_instrucao
-        BOOLEAN notificacoes_ativadas
+    %% Entidades Principais
+    PACIENTE {
+        string id_paciente PK
+        string nome
+        string cpf
+        string email
+        string senha
+        date data_nascimento
+        enum genero
+        string telefone
+        string salt
+        string endereco_id FK
+        timestamp criado_em
+        timestamp atualizado_em
+        string grau_instrucao
+        bit notificacoes_ativadas
+        bit ativo
+        datetime data_expiracao_token
+        string token_ativacao
     }
 
-    unidade_de_saude {
-        BINARY id_unidade_de_saude
-        STRING nome
-        STRING profissao
-        ENUM tipo
-        STRING cnpj
-        STRING registro_sanitario
-        TEXT descricao
+    ENDERECO {
+        string id_endereco PK
+        string rua
+        string complemento
+        string numero
+        string bairro
+        string cidade
+        string uf
+        string cep
+        datetime criado_em
+        datetime atualizado_em
     }
 
-    profissional_de_saude {
-        BINARY id_profissional_de_saude
-        STRING nome
-        STRING cpf
-        STRING email
-        STRING telefone
-        STRING codigo_acesso
-        STRING senha_hash
-        BINARY unidade_de_saude_id
+    UNIDADE_SAUDE {
+        string id_unidade PK
+        string nome
+        enum tipo
+        string cnpj
+        string salt
+        string email_unidade
+        string senha_unidade
+        string endereco_id FK
+        timestamp criado_em
+        timestamp atualizado_em
     }
 
-    agendamento {
-        BINARY id_agendamento
-        DATETIME data_hora
-        BINARY paciente_id
-        BINARY profissional_id
-        BINARY unidade_de_saude_id
-        ENUM status
+    ESPECIALIDADE {
+        int id_especialidade PK
+        string nome
+        timestamp criado_em
+        timestamp atualizado_em
+        text descricao
     }
 
-    exame {
-        BINARY id_exame
-        TEXT descricao
-        ENUM status
-        BINARY paciente_id
-        BINARY profissional_id
-        BINARY agendamento_id
+    %% Entidades Secundárias
+    PROFISSIONAL {
+        string id_profissional PK
+        string nome
+        string telefone
+        string email
+        string registro
+        string senha
+        string salt
+        int especialidade_id FK
+        string unidade_id FK
+        timestamp criado_em
+        timestamp atualizado_em
+        tinyint especialidade
     }
 
-    resultado_exame {
-        BINARY id_resultado
-        BINARY exame_id
-        BLOB resultado
-        TIMESTAMP data_resultado
+    AGENDAMENTO {
+        string id_agendamento PK
+        string paciente_id FK
+        string profissional_id FK
+        string unidade_id FK
+        enum status
+        datetime data_hora_inicio
+        datetime data_hora_fim
+        timestamp criado_em
+        timestamp atualizado_em
+        text observacoes
     }
 
-    prontuario {
-        BINARY id_prontuario
-        BINARY paciente_id
-        BINARY profissional_id
-        TEXT descricao
-        TEXT alergia
-        ENUM tipo_sanguineo
-        TEXT doenca_cronica
-        TIMESTAMP ultima_atualizacao
+    PRONTUARIO {
+        string id_prontuario PK
+        string profissional_id FK
+        string paciente_id FK
+        string tipo_sanguineo
+        string alergias
+        string doencas_cronicas
+        text observacoes
+        timestamp criado_em
+        timestamp atualizado_em
+        string descricao
+        text historico_familiar
     }
 
-    medicamento {
-        INT id_medicamento
-        STRING nome
-        BINARY paciente_id
-        BINARY profissional_id
-        BINARY agendamento_id
+    EXAME {
+        string id_exame PK
+        string prontuario_id FK
+        string paciente_id FK
+        string profissional_id FK
+        string agendamento_id FK
+        string tipo_exame
+        text descricao
+        date data_solicitacao
+        date data_realizacao
+        text resultado
+        enum status
+        timestamp criado_em
+        timestamp atualizado_em
     }
 
-    notificacao {
-        BINARY id_notificacao
-        BINARY paciente_id
-        ENUM tipo
-        DATETIME data_envio
-        ENUM status
-    }
-
-    endereco {
-        BINARY id_endereco
-        STRING rua
-        STRING numero
-        STRING bairro
-        STRING cidade
-        STRING uf
-        STRING cep
-        BINARY paciente_id
-        BINARY unidade_de_saude_id
-    }
-
-    log_acesso {
-        BINARY id_log
-        BINARY profissional_id
-        BINARY paciente_id
-        TIMESTAMP data_hora
-        ENUM acao
-    }
-
-    disponibilidade {
-        BINARY id_disponibilidade
-        BINARY profissional_id
-        BINARY unidade_de_saude_id
-        ENUM dia_semana
-        TIME horario_inicio
-        TIME horario_fim
-    }
-
-    paciente ||--o{ agendamento : "faz"
-    paciente ||--o{ exame : "realiza"
-    paciente ||--o{ prontuario : "possui"
-    paciente ||--o{ notificacao : "recebe"
-    paciente ||--o{ endereco : "possui"
-    paciente ||--o{ medicamento : "usa"
-    profissional_de_saude ||--o{ agendamento : "atende"
-    profissional_de_saude ||--o{ exame : "realiza"
-    profissional_de_saude ||--o{ prontuario : "atualiza"
-    profissional_de_saude ||--o{ log_acesso : "registra"
-    profissional_de_saude ||--o{ disponibilidade : "tem"
-    unidade_de_saude ||--o{ profissional_de_saude : "contrata"
-    unidade_de_saude ||--o{ agendamento : "recebe"
-    unidade_de_saude ||--o{ endereco : "possui"
-    exame ||--o{ resultado_exame : "gera"
-    agendamento ||--o{ exame : "agenda"
-    agendamento ||--o{ medicamento : "prescreve"
+    %% Relacionamentos
+    PACIENTE }|--|| ENDERECO : "reside"
+    UNIDADE_SAUDE }|--|| ENDERECO : "localizada"
+    PROFISSIONAL }|--|| ESPECIALIDADE : "possui"
+    PROFISSIONAL }|--|| UNIDADE_SAUDE : "vinculado"
+    PACIENTE ||--o{ AGENDAMENTO : "realiza"
+    PROFISSIONAL ||--o{ AGENDAMENTO : "atende"
+    UNIDADE_SAUDE ||--o{ AGENDAMENTO : "recebe"
+    PACIENTE ||--|| PRONTUARIO : "contém"
+    PROFISSIONAL ||--o{ PRONTUARIO : "elabora"
+    PRONTUARIO ||--o{ EXAME : "registra"
+    AGENDAMENTO ||--|| EXAME : "gera"
 
 ```
 
