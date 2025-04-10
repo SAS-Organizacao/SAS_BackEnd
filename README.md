@@ -23,175 +23,139 @@ Na SAS, acreditamos que a tecnologia pode ser uma grande aliada para melhorar a 
 
 ```mermaid
 erDiagram
-    %% Entidades
-    ENDERECO {
-        VARCHAR(36) id_endereco PK
-        VARCHAR(50) rua
-        VARCHAR(100) complemento
-        VARCHAR(10) numero
-        VARCHAR(50) bairro
-        VARCHAR(50) cidade
-        CHAR(2) uf
-        CHAR(9) cep
-        TIMESTAMP criado_em
-        TIMESTAMP atualizado_em
-    }
-
-    PACIENTE {
-        VARCHAR(36) id_paciente PK
-        VARCHAR(50) nome
-        CHAR(11) cpf
-        VARCHAR(100) email
-        VARCHAR(250) senha
+    paciente {
+        BINARY id_paciente
+        STRING nome
+        STRING cpf
+        STRING email
+        STRING senha
         DATE data_nascimento
         ENUM genero
-        VARCHAR(15) telefone
-        VARCHAR(50) grau_instrucao
-        TINYINT(1) notificacoes_ativadas
-        TIMESTAMP criado_em
-        TIMESTAMP atualizado_em
+        STRING telefone
+        STRING grau_instrucao
+        BOOLEAN notificacoes_ativadas
     }
 
-    UNIDADE_SAUDE {
-        VARCHAR(36) id_unidade_de_saude PK
-        VARCHAR(50) nome
+    unidade_de_saude {
+        BINARY id_unidade_de_saude
+        STRING nome
+        STRING profissao
         ENUM tipo
-        CHAR(14) cnpj
+        STRING cnpj
+        STRING registro_sanitario
         TEXT descricao
-        VARCHAR(250) email_unidade
-        VARCHAR(255) senha_unidade
-        TIMESTAMP criado_em
-        TIMESTAMP atualizado_em
     }
 
-    PROFISSIONAL {
-        VARCHAR(36) id_profissional_de_saude PK
-        VARCHAR(50) nome
-        VARCHAR(15) telefone
-        VARCHAR(50) especialidade
-        TIMESTAMP criado_em
-        TIMESTAMP atualizado_em
+    profissional_de_saude {
+        BINARY id_profissional_de_saude
+        STRING nome
+        STRING cpf
+        STRING email
+        STRING telefone
+        STRING codigo_acesso
+        STRING senha_hash
+        BINARY unidade_de_saude_id
     }
 
-    DISPONIBILIDADE {
-        VARCHAR(36) id_disponibilidade PK
-        ENUM dia_semana
-        TIME horario_inicio
-        TIME horario_fim
-        DATE data
-        TIMESTAMP criado_em
-        TIMESTAMP atualizado_em
-    }
-
-    AGENDAMENTO {
-        VARCHAR(36) id_agendamento PK
+    agendamento {
+        BINARY id_agendamento
         DATETIME data_hora
+        BINARY paciente_id
+        BINARY profissional_id
+        BINARY unidade_de_saude_id
         ENUM status
-        TEXT observacoes
-        TIMESTAMP criado_em
-        TIMESTAMP atualizado_em
     }
 
-    CREDENCIAIS {
-        VARCHAR(36) id_credencial PK
-        VARCHAR(100) email
-        VARCHAR(255) senha
-        ENUM tipo_profissional
-        VARCHAR(20) numero_registro
-        TIMESTAMP criado_em
-        TIMESTAMP atualizado_em
-    }
-
-    EXAME {
-        VARCHAR(36) id_exame PK
+    exame {
+        BINARY id_exame
         TEXT descricao
-        VARCHAR(50) tipo_exame
         ENUM status
-        TIMESTAMP criado_em
-        TIMESTAMP atualizado_em
+        BINARY paciente_id
+        BINARY profissional_id
+        BINARY agendamento_id
     }
 
-    HISTORICO {
-        VARCHAR(36) id_log PK
-        VARCHAR(50) tabela_afetada
-        VARCHAR(36) id_registro
-        ENUM acao
-        TIMESTAMP data_hora
-        VARCHAR(100) usuario
-        TEXT detalhes
+    resultado_exame {
+        BINARY id_resultado
+        BINARY exame_id
+        BLOB resultado
+        TIMESTAMP data_resultado
     }
 
-    LOG_ACESSO {
-        VARCHAR(36) id_log PK
-        TIMESTAMP data_hora
-        ENUM acao
-    }
-
-    MEDICAMENTO {
-        VARCHAR(36) id_medicamento PK
-        VARCHAR(100) nome
-        VARCHAR(50) dosagem
-        VARCHAR(50) frequencia
-        LONGBLOB receita
-        TIMESTAMP criado_em
-        TIMESTAMP atualizado_em
-    }
-
-    NOTIFICACAO {
-        VARCHAR(36) id_notificacao PK
-        ENUM tipo
-        TEXT mensagem
-        DATETIME data_envio
-        ENUM status
-    }
-
-    PRONTUARIO {
-        VARCHAR(36) id_prontuario PK
+    prontuario {
+        BINARY id_prontuario
+        BINARY paciente_id
+        BINARY profissional_id
         TEXT descricao
         TEXT alergia
         ENUM tipo_sanguineo
         TEXT doenca_cronica
-        TEXT historico_familiar
         TIMESTAMP ultima_atualizacao
     }
 
-    RESULTADO_EXAME {
-        VARCHAR(36) id_resultado PK
-        LONGBLOB resultado
-        TEXT interpretacao
-        TIMESTAMP data_resultado
+    medicamento {
+        INT id_medicamento
+        STRING nome
+        BINARY paciente_id
+        BINARY profissional_id
+        BINARY agendamento_id
     }
 
-    %% Relacionamentos em Português
-    ENDERECO ||--o{ PACIENTE : "possui"
-    ENDERECO ||--o{ UNIDADE_SAUDE : "localiza"
-    UNIDADE_SAUDE ||--o{ PROFISSIONAL : "contrata"
-    PROFISSIONAL ||--o{ DISPONIBILIDADE : "tem"
-    UNIDADE_SAUDE ||--o{ DISPONIBILIDADE : "oferece"
-    PACIENTE ||--o{ AGENDAMENTO : "realiza"
-    PROFISSIONAL ||--o{ AGENDAMENTO : "atende"
-    UNIDADE_SAUDE ||--o{ AGENDAMENTO : "disponibiliza"
-    DISPONIBILIDADE ||--o{ AGENDAMENTO : "gera"
-    PROFISSIONAL ||--|| CREDENCIAIS : "acessa_com"
-    UNIDADE_SAUDE ||--o{ CREDENCIAIS : "autoriza"
-    PACIENTE ||--o{ EXAME : "solicita"
-    PROFISSIONAL ||--o{ EXAME : "prescreve"
-    AGENDAMENTO ||--o{ EXAME : "relaciona"
-    PACIENTE ||--o{ HISTORICO : "registra_alteracoes"
-    UNIDADE_SAUDE ||--o{ HISTORICO : "audita"
-    PROFISSIONAL ||--o{ HISTORICO : "modifica"
-    AGENDAMENTO ||--o{ HISTORICO : "registra"
-    EXAME ||--o{ HISTORICO : "controla"
-    PROFISSIONAL ||--o{ LOG_ACESSO : "efetua"
-    PACIENTE ||--o{ LOG_ACESSO : "tem_acessado"
-    PACIENTE ||--o{ MEDICAMENTO : "utiliza"
-    PROFISSIONAL ||--o{ MEDICAMENTO : "receita"
-    AGENDAMENTO ||--o{ MEDICAMENTO : "origina"
-    EXAME ||--o{ MEDICAMENTO : "indica"
-    PACIENTE ||--o{ NOTIFICACAO : "recebe"
-    PACIENTE ||--|| PRONTUARIO : "contém"
-    PROFISSIONAL ||--o{ PRONTUARIO : "atualiza"
-    EXAME ||--|| RESULTADO_EXAME : "produz"
+    notificacao {
+        BINARY id_notificacao
+        BINARY paciente_id
+        ENUM tipo
+        DATETIME data_envio
+        ENUM status
+    }
+
+    endereco {
+        BINARY id_endereco
+        STRING rua
+        STRING numero
+        STRING bairro
+        STRING cidade
+        STRING uf
+        STRING cep
+        BINARY paciente_id
+        BINARY unidade_de_saude_id
+    }
+
+    log_acesso {
+        BINARY id_log
+        BINARY profissional_id
+        BINARY paciente_id
+        TIMESTAMP data_hora
+        ENUM acao
+    }
+
+    disponibilidade {
+        BINARY id_disponibilidade
+        BINARY profissional_id
+        BINARY unidade_de_saude_id
+        ENUM dia_semana
+        TIME horario_inicio
+        TIME horario_fim
+    }
+
+    paciente ||--o{ agendamento : "faz"
+    paciente ||--o{ exame : "realiza"
+    paciente ||--o{ prontuario : "possui"
+    paciente ||--o{ notificacao : "recebe"
+    paciente ||--o{ endereco : "possui"
+    paciente ||--o{ medicamento : "usa"
+    profissional_de_saude ||--o{ agendamento : "atende"
+    profissional_de_saude ||--o{ exame : "realiza"
+    profissional_de_saude ||--o{ prontuario : "atualiza"
+    profissional_de_saude ||--o{ log_acesso : "registra"
+    profissional_de_saude ||--o{ disponibilidade : "tem"
+    unidade_de_saude ||--o{ profissional_de_saude : "contrata"
+    unidade_de_saude ||--o{ agendamento : "recebe"
+    unidade_de_saude ||--o{ endereco : "possui"
+    exame ||--o{ resultado_exame : "gera"
+    agendamento ||--o{ exame : "agenda"
+    agendamento ||--o{ medicamento : "prescreve"
+
 ```
 
 # 📦 Instalação e Configuração

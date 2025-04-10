@@ -1,6 +1,8 @@
 package com.sas.sas_backend.controller;
 
+import com.sas.sas_backend.dtos.AgendamentoExameDto;
 import com.sas.sas_backend.dtos.ExameDto;
+import com.sas.sas_backend.dtos.response.ExameAgendamentoResponse;
 import com.sas.sas_backend.service.ExameService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,24 +16,15 @@ import java.util.List;
 @RequestMapping("/exame")
 @RequiredArgsConstructor
 public class ExameController {
+
     private final ExameService exameService;
 
 
-    @PostMapping("/create")
-    public ResponseEntity<ExameDto> cadastrarExame(@RequestBody @Valid ExameDto exameDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(exameService.cadastrarExame(exameDto));
-    }
+
 
     @GetMapping
     public ResponseEntity<List<ExameDto>> listarExames() {
         return ResponseEntity.ok().body(exameService.listarExames());
-    }
-
-    @GetMapping("findBy/paciente/cpf/{cpf}")
-    public ResponseEntity<List<ExameDto>> listarExamesPacienteCPF(@PathVariable String cpf) {
-
-        return ResponseEntity.ok().body(exameService.listarExamesPacienteCPF(cpf));
-
     }
 
     @PutMapping("/update/{id}")
@@ -46,6 +39,15 @@ public class ExameController {
         exameService.removerExame(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/agendar")
+    public ResponseEntity<ExameAgendamentoResponse> criarAgendamentoParaExame(@RequestBody @Valid AgendamentoExameDto agendamentoExameDto) {
+
+        ExameAgendamentoResponse response = exameService.agendarExame(agendamentoExameDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+
 }
 
 

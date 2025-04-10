@@ -4,7 +4,7 @@ import com.sas.sas_backend.exceptions.BaseException;
 
 public class ExameAlreadyExistsException extends BaseException {
     public ExameAlreadyExistsException(String detail) {
-        super("409", "Profissional já existente!", detail);
+        super("409", "Exame Agendado!", detail);
     }
 }
 

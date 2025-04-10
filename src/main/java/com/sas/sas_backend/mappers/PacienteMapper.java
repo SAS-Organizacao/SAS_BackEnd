@@ -9,10 +9,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = EnderecoMapper.class)
 public interface PacienteMapper {
 
-    @Mapping(source = "endereco", target = "endereco")
-    @Mapping(source = "exame", target = "exame")
-    Paciente toPaciente(PacienteDto pacienteDto);
 
+    @Mapping(source = "endereco", target = "endereco")
+    Paciente toPaciente(PacienteDto pacienteDto);
 
     PacienteDto toPacienteDto(Paciente paciente);
 }

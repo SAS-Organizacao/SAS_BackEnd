@@ -1,11 +1,13 @@
 package com.sas.sas_backend.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sas.sas_backend.models.enumerated.StatusExame;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
+
 public record ExameDto(
+
         @NotBlank(message = "Descrição é obrigatória!")
         String descricao,
 
@@ -14,14 +16,11 @@ public record ExameDto(
         @NotNull(message = "Status é obrigatório!")
         StatusExame status,
 
+        LocalDateTime horaExame,
 
-         @JsonIgnore
-         PacienteDto paciente,
+        String pacienteCpf,
 
+        String profissionalNumero
 
-         @JsonIgnore
-         ProfissionalDeSaudeDto profissionalDeSaude
-
-
-//         AgendamentoDto agendamento
-) {}
+) {
+}

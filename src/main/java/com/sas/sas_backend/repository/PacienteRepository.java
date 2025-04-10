@@ -10,12 +10,12 @@ import java.util.Optional;
 
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente, String> {
+
     Optional<Paciente> findByCpf(String cpf);
 
     @Query("SELECT CASE WHEN COUNT(p) > 0 THEN true ELSE false END FROM Paciente p WHERE p.email = :email OR p.cpf = :cpf")
     boolean findByEmailOrCpf(@Param("email") String email, @Param("cpf") String cpf);
 
-
-
+    Optional<Paciente> findByEmail(String email);
 
 }

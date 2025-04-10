@@ -15,9 +15,9 @@ import lombok.Setter;
 public class Endereco {
 
     @Id
-    @Column(name = "id_endereco", length = 36)
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String idEndereco;
+    @Column(name = "id_endereco", length = 36)
+    private String id;
 
     @Column(nullable = false, length = 50)
     private String rua;

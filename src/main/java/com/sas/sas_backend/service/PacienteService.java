@@ -1,31 +1,30 @@
 package com.sas.sas_backend.service;
 
-import com.sas.sas_backend.dtos.ExameDto;
 import com.sas.sas_backend.dtos.PacienteDto;
+import com.sas.sas_backend.exceptions.paciente.CredentialsNotMatchException;
 import com.sas.sas_backend.exceptions.paciente.PacienteAlreadyExistsException;
 import com.sas.sas_backend.exceptions.paciente.PacienteNotFoundException;
 import com.sas.sas_backend.mappers.ExameMapper;
-import com.sas.sas_backend.models.Endereco;
-import com.sas.sas_backend.models.Exame;
-import com.sas.sas_backend.models.Paciente;
 import com.sas.sas_backend.mappers.PacienteMapper;
-import com.sas.sas_backend.repository.EnderecoRepository;
-import com.sas.sas_backend.repository.ExameRepository;
+import com.sas.sas_backend.models.Paciente;
+import com.sas.sas_backend.models.enumerated.RolesEnum;
 import com.sas.sas_backend.repository.PacienteRepository;
+import com.sas.sas_backend.utils.password.HashPassword;
+import com.sas.sas_backend.utils.password.PasswordHashResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class PacienteService {
 
     private final PacienteRepository pacienteRepository;
-    private final EnderecoRepository enderecoRepository;
     private final PacienteMapper pacienteMapper;
-    private final ExameRepository exameRepository;
+    private final TokenService tokenService;
     private final ExameMapper exameMapper;
 
     public PacienteDto buscarPorCpf(String cpf) {
@@ -35,6 +34,18 @@ public class PacienteService {
 
     }
 
+    public String loginPaciente(String email, String password) {
+        Optional<Paciente> user = pacienteRepository.findByEmail(email);
+        if (!user.isPresent()) {
+            throw new CredentialsNotMatchException("");
+        }
+
+        boolean passwordMatch = HashPassword.checkPassword(password, user.get().getSenha(), user.get().getSalt());
+        if (!passwordMatch) {
+            throw new CredentialsNotMatchException("");
+        }
+        return tokenService.gerarToken(user.get().getId(), RolesEnum.PACIENTE.getNome());
+    }
 
     @Transactional
     public PacienteDto cadastrarPaciente(PacienteDto dto) {
@@ -44,11 +55,31 @@ public class PacienteService {
 
         Paciente paciente = pacienteMapper.toPaciente(dto);
 
-        Endereco enderecoSaved = enderecoRepository.save(paciente.getEndereco());
-        paciente.setEndereco(enderecoRepository.findById(enderecoSaved.getIdEndereco()).orElse(null));
+        PasswordHashResponse response = HashPassword.hashPassword(paciente.getSenha());
+
+        paciente.setSenha(response.hash());
+        paciente.setSalt(response.salt());
 
         Paciente savedPaciente = pacienteRepository.save(paciente);
+
         return pacienteMapper.toPacienteDto(savedPaciente);
+    }
+
+    @Transactional
+    public void alterarSenha(String id, String senhaAtual, String novaSenha) {
+        Paciente paciente = pacienteRepository.findById(id)
+                .orElseThrow(() -> new PacienteNotFoundException("Paciente não encontrado"));
+
+        boolean senhaCorreta = HashPassword.checkPassword(senhaAtual, paciente.getSenha(), paciente.getSalt());
+        if (!senhaCorreta) {
+            throw new CredentialsNotMatchException("Senha atual incorreta");
+        }
+
+        PasswordHashResponse novaHash = HashPassword.hashPassword(novaSenha);
+        paciente.setSenha(novaHash.hash());
+        paciente.setSalt(novaHash.salt());
+
+        pacienteRepository.save(paciente);
     }
 
 
@@ -63,26 +94,15 @@ public class PacienteService {
 
     public PacienteDto atualizarPaciente(String id, PacienteDto dto) {
         Paciente pacienteExistente = pacienteRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Paciente não encontrado."));
+                .orElseThrow(() -> new PacienteNotFoundException("Paciente não encontrado."));
         Paciente paciente = pacienteMapper.toPaciente(dto);
-        paciente.setIdPaciente(pacienteExistente.getIdPaciente());
+        paciente.setId(pacienteExistente.getId());
         return pacienteMapper.toPacienteDto(pacienteRepository.save(paciente));
     }
 
     public void deletarPaciente(String id) {
-        pacienteRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Paciente não encontrado."));
+        pacienteRepository.findById(id).orElseThrow(() -> new PacienteNotFoundException("Paciente não encontrado."));
         pacienteRepository.deleteById(id);
-
-    }
-
-    public PacienteDto adicionarExame(String id, ExameDto dto) {
-        Paciente paciente = pacienteRepository.findById(id).orElseThrow(() -> new PacienteNotFoundException("Paciente não encontrado."));
-        Exame exame = exameMapper.toExame(dto);
-        exame.setPaciente(paciente);
-
-        Exame exameSalvo = exameRepository.save(exame);
-        return pacienteMapper.toPacienteDto(pacienteRepository.save(paciente));
-
 
     }
 }

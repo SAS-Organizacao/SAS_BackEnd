@@ -1,6 +1,5 @@
 package com.sas.sas_backend.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sas.sas_backend.models.enumerated.Genero;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,28 +8,35 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "paciente")
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Paciente {
 
     @Id
     @Column(name = "id_paciente", length = 36)
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String idPaciente;
+    private String id;
 
     @Column(nullable = false, unique = true, length = 11)
     private String cpf;
+
 
     @Column(nullable = false, length = 50)
     private String nome;
 
     @Column(nullable = false, unique = true, length = 100)
     private String email;
+
+    @Column()
+    private String salt;
 
     @Column(nullable = false, length = 250)
     private String senha;
@@ -52,11 +58,15 @@ public class Paciente {
     private Boolean notificacoesAtivadas;
 
     @OneToOne(cascade = CascadeType.ALL)
-    //                  coluna da entidade                    coluna da entidade de destino
-    @JoinColumn(name = "endereco_id", referencedColumnName = "id_endereco")
+    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Exame> exame = new ArrayList<>();
+    @OneToMany(mappedBy = "paciente")
+    private List<Exame> exames = new ArrayList<>();
 
+    private boolean ativo = false;
+
+    private String tokenAtivacao;
+
+    private LocalDateTime dataExpiracaoToken;
 }

@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum StatusExame {
     PENDENTE("Pendente"),
     REALIZADO("Realizado"),
-    CANCELADO("Cancelado");
+    CANCELADO("Cancelado"),
+    AGENDADO("Agendado"),
+    ANALISADO("Analisado");
 
     private final String description;
 

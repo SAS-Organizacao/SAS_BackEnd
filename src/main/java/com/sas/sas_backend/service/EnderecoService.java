@@ -1,8 +1,8 @@
 package com.sas.sas_backend.service;
 
 import com.sas.sas_backend.dtos.EnderecoDto;
-import com.sas.sas_backend.models.Endereco;
 import com.sas.sas_backend.mappers.EnderecoMapper;
+import com.sas.sas_backend.models.Endereco;
 import com.sas.sas_backend.repository.EnderecoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class EnderecoService {
     public EnderecoDto atualizarEndereco(String id, EnderecoDto dto) {
         Endereco enderecoExistente = enderecoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado."));
         Endereco endereco = enderecoMapper.toEndereco(dto);
-        endereco.setIdEndereco(enderecoExistente.getIdEndereco());
+        endereco.setId(enderecoExistente.getId());
         return enderecoMapper.toEnderecoDto(enderecoRepository.save(endereco));
     }
 
